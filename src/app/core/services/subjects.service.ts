@@ -10,8 +10,13 @@ export class SubjectsService {
 
   constructor(private apiService: ApiService) {}
 
-  getAllBooks(subjectName: string): Observable<BookResponse> {
-    const limit = 10;
+  getAllBooks(subjectName: string, page?: number, pageSize?: number): Observable<BookResponse> {
+    const limit = 100;
+    if(page && pageSize){
+      const limit=10;
+      const offset = (page - 1) * pageSize;
+      return this.apiService.get(`/subjects/${subjectName.toLowerCase().split(' ').join('_')}.json?offset=${offset}&limit=${limit}`);
+    }
     return this.apiService.get(`/subjects/${subjectName.toLowerCase().split(' ').join('_')}.json?limit=${limit}`);
   }
 }

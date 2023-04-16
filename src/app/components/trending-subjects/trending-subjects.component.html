@@ -1,6 +1,48 @@
-<div *ngIf="allBooks.length > 0">
-  <front-end-internship-assignment-table-view
-  [booksList]="allBooks"
-  [subjectName]="subjectName"
-  ></front-end-internship-assignment-table-view>
+
+<div class="home-container">
+  <!-- side search bar -->
+  <div class="left-container">
+    <div class="side-search-bar">
+      <div class="logo"><fa-icon [icon]="faBooks" size="xl"></fa-icon><span>BookFinder</span></div>
+
+      <div class="links-container">
+        <a class="nav-link" routerLink="/"><fa-icon [icon]="faCoffee" size="xl"></fa-icon><span
+            [ngStyle]="{marginLeft:'8px'}">Home</span></a>
+        <div class="trending-subjects">
+          <h4 class="drop-down-btn nav-link" (mouseenter)="dropDown()" (mouseleave)="close()">
+            <fa-icon [icon]="faGraduationCap" size="xl"></fa-icon>
+            <span>Trending</span>
+            <fa-icon *ngIf="isHovered" [icon]="faAngleUp"></fa-icon>
+            <fa-icon *ngIf="!isHovered" [icon]="faAngleDown"></fa-icon>
+          </h4>
+          <div class="drop-down-items" (mouseenter)="dropDown()" (mouseleave)="close()">
+            <a class="tw-text-16-px tw-cursor-pointer tw-p-12-px" *ngFor="let subject of trendingSubjects"
+              routerLink="/trending-subject/{{ subject.name }}">
+              {{ subject.name }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="right-container">
+    <!-- top search bar -->
+    <div class="top-search-bar">
+      <h4>Trending Subjects: ({{subjectName}})</h4>
+      <!-- <div class="search-area">
+        <div class="search-button">
+          <mat-icon aria-label="Search Icon">search</mat-icon>
+          <input [formControl]="bookSearch" name="searchKey" type="text" placeholder="Search Books" class=""
+            (keydown.enter)="getSearchedBooks()">
+        </div>
+      </div> -->
+    </div>
+
+    <front-end-internship-assignment-table-view *ngIf="showTable" [subjectName]="subjectName"
+       [showTable]="showTable" [isNewSearch]="isNewSearch"></front-end-internship-assignment-table-view>
+
+  </div>
 </div>
+
